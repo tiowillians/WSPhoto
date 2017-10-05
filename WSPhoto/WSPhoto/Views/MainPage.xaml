@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WSPhoto"
+             x:Class="WSPhoto.Views.MainPage" Title="Teste WebService">
+
+    <ContentPage.Content>
+        <Grid Padding="5" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.8*"/>
+                <ColumnDefinition Width="1.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Latitude e Longitude, botão pesquisar imagens -->
+            <Entry Grid.Row="0" Grid.Column="0" Style="{StaticResource entry_def}" Placeholder="Latitude"
+                   Keyboard="Numeric" x:Name="txtLatitude"/>
+            <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource entry_def}" Placeholder="Longitude"
+                   Keyboard="Numeric" x:Name="txtLongitude"/>
+            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource botao_def}" Text="Buscar"
+                    HorizontalOptions="FillAndExpand" Clicked="BtnBuscar_Clicked" />
+
+            <!-- lista mostrando as imagens retornadas -->
+            <ListView ItemsSource="{Binding Imagens}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
+                      Margin="2, 2, 2, 2" HasUnevenRows="true" ItemTapped="Imagem_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="White" Padding="2" RowSpacing="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Imagem}" Grid.Column="0" />
+                                <Label Text="{Binding Titulo}" Grid.Column="1" FontAttributes="Bold" FontSize="15"
+                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- mensagem: "Nenhuma Imagem Retornada" -->
+            <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                   Text="NENHUMA IMAGEM RETORNADA" HorizontalOptions="Center" 
+                   VerticalOptions="Center" IsVisible="{Binding ListaVazia}" />
+
+            <!-- indicador de atividade em segundo plano -->
+            <ActivityIndicator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsRunning="{Binding IsBusy}" Color="DarkBlue" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

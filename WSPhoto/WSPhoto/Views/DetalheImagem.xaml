@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WSPhoto.Views.DetalheImagem"
+             Title="Detalhes">
+
+    <ContentPage.Content>
+        <Grid Padding="5" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Linha 1: Titulo -->
+            <Label Text="Titulo:" Grid.Row="0" Grid.Column="0" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="End"/>
+            <Label Text="{Binding Titulo}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="Start"/>
+
+            <!-- Linha 2: Vizinhança -->
+            <Label Text="Local:" Grid.Row="1" Grid.Column="0" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="End"/>
+            <Label Text="{Binding Vizinhanca}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="Start"/>
+
+            <!-- Linha 3: Localização -->
+            <Label Text="Coordenadas:" Grid.Row="2" Grid.Column="0" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="End"/>
+            <Label Text="{Binding Coordenadas}" Grid.Row="2" Grid.Column="1" FontAttributes="Bold" FontSize="Small"
+                   VerticalOptions="Center" HorizontalOptions="Start"/>
+
+            <!-- Linha 4: Imagem -->
+            <Image Source="{Binding Imagem}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                   VerticalOptions="Center" HorizontalOptions="Center" Aspect="AspectFill"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
