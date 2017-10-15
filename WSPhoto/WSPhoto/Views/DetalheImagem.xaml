@@ -11,6 +11,8 @@
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -35,9 +37,13 @@
             <Label Text="{Binding Coordenadas}" Grid.Row="2" Grid.Column="1" FontAttributes="Bold" FontSize="Small"
                    VerticalOptions="Center" HorizontalOptions="Start"/>
 
-            <!-- Linha 4: Imagem -->
-            <Image Source="{Binding Imagem}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+            <!-- Linha 4 em diante: Imagem -->
+            <Image Source="{Binding Imagem}" Grid.Row="3" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"
                    VerticalOptions="Center" HorizontalOptions="Center" Aspect="AspectFill"/>
+
+            <!-- Linha 5: indicador de atividade em segundo plano -->
+            <ActivityIndicator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                               IsRunning="{Binding IsBusy}" Color="DarkBlue" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

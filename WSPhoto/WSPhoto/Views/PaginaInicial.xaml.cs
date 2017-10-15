@@ -10,10 +10,10 @@ using Xamarin.Forms;
 
 namespace WSPhoto.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class PaginaInicial : ContentPage
     {
         ImagensViewModel viewModel;
-        public MainPage()
+        public PaginaInicial()
         {
             InitializeComponent();
             viewModel = new ImagensViewModel();
@@ -42,7 +42,9 @@ namespace WSPhoto.Views
             viewModel.Imagens.Clear();
 
             // consumir WebService do Google Place Photos para obter imagens
-            WSGooglePlacesResponse resp = await MyWebServices.GetSearchAsync(double.Parse(txtLatitude.Text), double.Parse(txtLongitude.Text));
+            WSGooglePlacesResponse resp = await MyWebServices.GetSearchAsync(double.Parse(txtLatitude.Text),
+                                                                             double.Parse(txtLongitude.Text),
+                                                                             (int)raioSlider.Value);
             if (resp == null)
             {
                 viewModel.IsBusy = false;
@@ -67,8 +69,10 @@ namespace WSPhoto.Views
                 {
                     foreach (Photo foto in r.Photos)
                     {
-                        img = await MyWebServices.GetPhotoAsync(400, foto.Photo_reference);
-                        imgModel = new ImagensModel(r.Name, foto.Html_attributions, r.Vicinity, r.Geometry.GeoLocation, img);
+                        img = await MyWebServices.GetPhotoAsync(250, foto.Photo_reference);
+                        imgModel = new ImagensModel(r.Name, foto.Html_attributions, r.Vicinity,
+                                                    r.Geometry.GeoLocation, img, foto.Width, foto.Height,
+                                                    foto.Photo_reference);
 
                         viewModel.Imagens.Add(imgModel);
                     }
@@ -82,6 +86,18 @@ namespace WSPhoto.Views
             viewModel.ListaVazia = (viewModel.Imagens.Count == 0);
         }
 
+        public void AtualizaImagemHD(string reference, object imgHD)
+        {
+            foreach(ImagensModel im in viewModel.Imagens)
+            {
+                if (im.Reference.CompareTo(reference) == 0)
+                {
+                    im.ImagemHD = imgHD;
+                    return;
+                }
+            }
+        }
+
         async void Imagem_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             // obtem item selecionado
@@ -90,7 +106,7 @@ namespace WSPhoto.Views
                 return;
 
             // mostra janela com detalhes
-            DetalheImagem detPage = new DetalheImagem(item);
+            DetalheImagem detPage = new DetalheImagem(this, item);
             await Navigation.PushAsync(detPage);
         }
     }

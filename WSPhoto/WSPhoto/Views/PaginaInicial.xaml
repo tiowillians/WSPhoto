@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WSPhoto"
-             x:Class="WSPhoto.Views.MainPage" Title="Teste WebService">
+             x:Class="WSPhoto.Views.PaginaInicial" Title="Teste WebService">
 
     <ContentPage.Content>
         <Grid Padding="5" RowSpacing="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
@@ -22,25 +23,34 @@
             <Entry Grid.Row="0" Grid.Column="0" Style="{StaticResource entry_def}" Placeholder="Latitude"
                    Keyboard="Numeric" x:Name="txtLatitude"/>
             <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource entry_def}" Placeholder="Longitude"
-                   Keyboard="Numeric" x:Name="txtLongitude"/>
+                   Keyboard="Numeric" x:Name="txtLongitude" />
             <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource botao_def}" Text="Buscar"
                     HorizontalOptions="FillAndExpand" Clicked="BtnBuscar_Clicked" />
-
+            
+            <!-- Slider e label para definição do parâmetro Radius do WebService de localização das imagens -->
+            <Slider x:Name="raioSlider" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    Maximum="1000" Minimum="50" />
+            <Label BindingContext="{x:Reference raioSlider}" x:Name="txtRaio" Grid.Row="1" Grid.Column="2"
+                   Text="{Binding Value, StringFormat='Dist: {0:F0}'}"
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            
             <!-- lista mostrando as imagens retornadas -->
-            <ListView ItemsSource="{Binding Imagens}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
-                      Margin="2, 2, 2, 2" HasUnevenRows="true" ItemTapped="Imagem_ItemTapped">
+            <ListView ItemsSource="{Binding Imagens}" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
+                      Margin="2, 2, 2, 2" HasUnevenRows="true" ItemTapped="Imagem_ItemTapped" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid BackgroundColor="White" Padding="2" RowSpacing="2">
+                            <Grid BackgroundColor="White" Padding="2" RowSpacing="2" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="3*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Imagem}" Grid.Column="0" />
+                                <Image Source="{Binding Imagem}" Grid.Column="0" Aspect="AspectFit"
+                                       VerticalOptions="Fill" HorizontalOptions="Fill"/>
                                 <Label Text="{Binding Titulo}" Grid.Column="1" FontAttributes="Bold" FontSize="15"
-                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                                       VerticalOptions="Fill" HorizontalOptions="Fill"
+                                       VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -48,12 +58,12 @@
             </ListView>
 
             <!-- mensagem: "Nenhuma Imagem Retornada" -->
-            <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                    Text="NENHUMA IMAGEM RETORNADA" HorizontalOptions="Center" 
                    VerticalOptions="Center" IsVisible="{Binding ListaVazia}" />
 
             <!-- indicador de atividade em segundo plano -->
-            <ActivityIndicator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsRunning="{Binding IsBusy}" Color="DarkBlue" />
+            <ActivityIndicator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" IsRunning="{Binding IsBusy}" Color="DarkBlue" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

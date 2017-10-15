@@ -25,10 +25,25 @@ namespace WSPhoto.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propriedade));
         }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (_isBusy == value)
+                    return;
+
+                _isBusy = value;
+                InformaAlteracao("IsBusy");
+            }
+        }
+
         public DetalheViewModel(ImagensModel img)
         {
             Titulo = img.Titulo;
-            Imagem = img.Imagem;
+            Imagem = img.ImagemHD;
+            _isBusy = (img.ImagemHD == null);
             Local = img.Local;
             Coordenadas = img.Coordenadas;
             Atributo = img.Atributo;

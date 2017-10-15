@@ -15,15 +15,20 @@ namespace WSPhoto.WebServices
         // URL para acessar WebService Google Place Photo
         public const string URL_WS_SEARCH = "https://maps.googleapis.com/maps/api/place/search/json?";
         public const string URL_WS_PHOTO = "https://maps.googleapis.com/maps/api/place/photo?";
-        public const string GOOGLE_ACCESS_KEY = "COLOQUE AQUI A SUA CHAVE DE ACESSO";
+        public const string GOOGLE_ACCESS_KEY = "COLOCAR AQUI A CHAVE DE ACESSO À API GOOGLE MAPS";
 
-        public static async Task<WSGooglePlacesResponse> GetSearchAsync(double lat, double lng)
+        public static async Task<WSGooglePlacesResponse> GetSearchAsync(double lat, double lng, int raio)
         {
             string url = URL_WS_SEARCH;
             url += "location=" + lat.ToString().Replace(',', '.');
             url += "," + lng.ToString().Replace(',', '.');
-            url += "&radius=50000";
+
+            // distância em metros (máximo: 50Km) a partir das coordenadas fornecidas
+            url += "&radius=" + raio.ToString();
+
+            // chave de acesso à API Google Places
             url += "&key=" + GOOGLE_ACCESS_KEY;
+
             string resp = await GetStringAsync(url);
             if (resp == null)
                 return null;

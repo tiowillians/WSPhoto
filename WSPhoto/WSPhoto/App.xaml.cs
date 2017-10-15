@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using WSPhoto.Views;
 using Xamarin.Forms;
 
 namespace WSPhoto
@@ -14,10 +14,10 @@ namespace WSPhoto
             InitializeComponent();
 
             // página inicial da aplicação (com barra de navegação)
-            Views.MainPage pagInicial = new Views.MainPage();
+            PaginaInicial pagInicial = new PaginaInicial();
             MainPage = new NavigationPage(pagInicial)
             {
-                BarBackgroundColor = Color.SteelBlue,
+                BarBackgroundColor = Color.MediumVioletRed,
                 BarTextColor = Color.White
             };
 
